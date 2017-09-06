@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:background="#6000"
+    >
+
+
+    <ImageButton
+        android:id="@+id/beauty_live_layout"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="1"
+        android:background="@mipmap/my" />
+
+    <ImageButton
+        android:layout_marginLeft="72dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/noSound_live"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:background="@mipmap/mute" />
+
+    <ImageButton
+        android:id="@+id/camera_start_li_layout"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@mipmap/im_shutter" />
+
+    <ImageButton
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="72dp"
+        android:id="@+id/danm_live"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:background="@mipmap/dm" />
+
+    <ImageButton
+        android:id="@+id/changedCa_live_layout"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:background="@mipmap/change" />
+
+</RelativeLayout>
