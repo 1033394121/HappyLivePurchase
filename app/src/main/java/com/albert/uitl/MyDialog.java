@@ -3,6 +3,7 @@ package com.albert.uitl;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
@@ -26,8 +27,9 @@ import com.albert.activity.R;
  * @time 2017/9/5 9:20
  * @change
  * @chang time
- * @class describe
- */
+ * @class describe*/
+
+
 
 public class MyDialog extends Dialog {
     public MyDialog(@NonNull Context context) {
@@ -58,42 +60,58 @@ public class MyDialog extends Dialog {
         private OnClickListener positiveButtonClickListener;
         private OnClickListener negativeButtonClickListener;
 
+//        private String room;
 
         public Builder(Context context) {
             this.context = context;
         }
 
-        /**
-         * Set the Dialog title from resource
+
+       /*  * Set the Dialog title from resource
          *
          * @param title
-         * @return
-         */
+         * @return*/
+
+
         public Builder setTitle(int title) {
             this.title = (String) context.getText(title);
             return this;
         }
 
-        /**
+/*
          * Set the Dialog title from String
          *
          * @param title
          * @return
          */
 
+
         public Builder setTitle(String title) {
             this.title = title;
             return this;
         }
 
-//        /**
+//        public Builder setroomID(int roomID) {
+//            this.roomID = (EditText) context.getText(roomID);
+//            return this;
+//        }
+//
+//        public Builder setroomID(EditText roomID) {
+//            this.roomID = roomID;
+//            return this;
+//
+//        }
+
+//
+
 //         * @author Albert
 //         * set Edit
 //         *
 //         *
 //         * @time 2017/9/5  9:33
 //         * @describe
-//         */
+//
+
 //        public Builder EditText(int roomID) {
 //            this.title = (String) context.getText(roomID);
 //            return this;
@@ -105,12 +123,13 @@ public class MyDialog extends Dialog {
             return this;
         }
 
-        /**
-         * Set the positive button resource and it's listener
+
+       /*  * Set the positive button resource and it's listener
          *
          * @param positiveButtonText
          * @return
          */
+
         public Builder setPositiveButton(int positiveButtonText,
                                          OnClickListener listener) {
             this.positiveButtonText = (String) context
@@ -191,6 +210,11 @@ public class MyDialog extends Dialog {
 //             set the content message
             if (roomID != null) {
                 roomID = (EditText) layout.findViewById(R.id.roomID_dialog);
+//                room = roomID.getText().toString();
+                SharedPreferences.Editor editor = context.getSharedPreferences("data", Context.MODE_PRIVATE).edit();
+                editor.putString("roomid",String.valueOf(roomID.getText()));
+                editor.apply();
+
             } else if (contentView != null) {
                 // if no message set
                 // add the contentView to the dialog body
@@ -202,8 +226,8 @@ public class MyDialog extends Dialog {
             dialog.setContentView(layout);
             return dialog;
         }
-
-
+//
+//
     }
 
 

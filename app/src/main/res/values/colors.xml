@@ -8,5 +8,9 @@
 
     <color name="font_color_35">#368ca8</color>
     <color name="transparent1">#7fffffff</color><!--透明白色 -->
+    <color name="check_box">#05cb00</color>
+
+    <color name="dialogBac">#ffffff</color>
+
 
 </resources>

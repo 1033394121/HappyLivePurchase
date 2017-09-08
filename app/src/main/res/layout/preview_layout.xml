@@ -3,31 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_alignParentBottom="true"
-    android:background="#6000"
+    android:background="#9000"
     android:orientation="vertical">
 
 
     <ImageButton
         android:id="@+id/camera_start_pr_layout"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:layout_margin="10dp"
-        android:background="@mipmap/shutter" />
+        android:background="@mipmap/raw" />
 
     <ImageButton
         android:id="@+id/beauty_preview_layout"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="50dp"
         android:background="@mipmap/my" />
 
     <ImageButton
         android:id="@+id/changedCa_preview_layout"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="50dp"

@@ -14,7 +14,7 @@
         <!--波纹的颜色-->
         <item name="android:colorControlHighlight">@color/colorPrimary</item>
         <!--选中的颜色-->
-        <item name="colorAccent">@color/colorBtn</item>
+        <item name="colorAccent">@color/check_box</item>
     </style>
 
     <style name="Dialog" parent="android:style/Theme.Dialog">
@@ -25,9 +25,9 @@
     </style>
 
     <!--<style name="camera_style">-->
-        <!--&lt;!&ndash;波纹的颜色&ndash;&gt;-->
-        <!--<item name="android:colorControlHighlight">@color/colorPrimary</item>-->
-        <!--&lt;!&ndash;&lt;!&ndash;选中的颜色&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;<item name="colorAccent">@color/colorBtn</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;波纹的颜色&ndash;&gt;-->
+    <!--<item name="android:colorControlHighlight">@color/colorPrimary</item>-->
+    <!--&lt;!&ndash;&lt;!&ndash;选中的颜色&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="colorAccent">@color/colorBtn</item>&ndash;&gt;-->
     <!--</style>-->
 </resources>

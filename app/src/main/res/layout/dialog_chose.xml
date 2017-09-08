@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="340dp"
     android:layout_height="240dp"
     android:layout_gravity="center_horizontal"
-    android:background="@drawable/dialog"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,12 +18,13 @@
             android:padding="8dp"
             android:text="请输入直播房间号"
             android:textColor="#000000"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <ImageButton
+            android:layout_centerVertical="true"
             android:id="@+id/closeBtn_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:background="@null"
             android:src="@mipmap/close" />
@@ -50,6 +50,7 @@
             android:background="@drawable/edit_room"
             android:hint="给你的房间创建个ID吧"
             android:padding="10dp"
+            android:textColorHint="#aa111111"
             android:textSize="20dp" />
     </LinearLayout>
 
@@ -64,15 +65,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="true"
             android:text="主播A"
             android:theme="@style/cb_test" />
 
         <CheckBox
+
             android:id="@+id/roomB_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="主播A"
+            android:checked="false"
+            android:enabled="false"
+            android:text="主播B"
             android:theme="@style/cb_test" />
 
         <CheckBox
@@ -80,7 +85,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="主播A"
+            android:checked="false"
+            android:enabled="false"
+            android:text="主播C"
             android:theme="@style/cb_test" />
     </LinearLayout>
 
@@ -92,13 +99,13 @@
             android:id="@+id/intentBtn_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="15dp"
             android:background="@drawable/btn"
             android:text="确定"
             android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            android:textSize="15sp" />
     </RelativeLayout>
 
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    >
+
+    <style name="checkbox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:windowBackground">@drawable/dialog</item>
+
+        <!--设置自定义背景的透明度-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+</resources>
