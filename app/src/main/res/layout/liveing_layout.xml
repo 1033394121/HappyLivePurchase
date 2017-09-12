@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:background="@mipmap/my" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/noSound_live"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -23,7 +23,7 @@
         android:layout_weight="1"
         android:background="@mipmap/mute" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/camera_stop_li_layout"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -33,7 +33,7 @@
         android:layout_weight="1"
         android:background="@mipmap/raw2" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/danm_live"
         android:layout_width="50dp"
         android:layout_height="50dp"

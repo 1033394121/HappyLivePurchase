@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="dialog" parent="Animation.AppCompat.Dialog">
+    <style name="dialog" parent="AlertDialog.AppCompat.Light">
         <item name="android:windowBackground">@drawable/dialog</item>
 
         <!--设置自定义背景的透明度-->
@@ -10,5 +10,4 @@
     </style>
 </resources>
 
-    <!--Theme.AppCompat.Dialog.Alert-->
-    <!--@android:style/Theme.Dialog-->
+    <!--Theme.AppCompat.Dialog.Alert--><!--@android:style/Theme.Dialog-->

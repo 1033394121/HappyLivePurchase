@@ -21,13 +21,13 @@
             android:textSize="20sp" />
 
         <ImageButton
-            android:layout_centerVertical="true"
             android:id="@+id/closeBtn_dialog"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
-            android:background="@null"
-            android:src="@mipmap/close" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@mipmap/close" />
     </RelativeLayout>
 
     <View
@@ -48,7 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/edit_room"
-            android:hint="给你的房间创建个ID吧"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="请输入在后台创建的直播房间号"
+            android:inputType="numberSigned"
             android:padding="10dp"
             android:textColorHint="#aa111111"
             android:textSize="20dp" />
@@ -67,6 +70,7 @@
             android:layout_weight="1"
             android:checked="true"
             android:text="主播A"
+            android:textSize="13sp"
             android:theme="@style/cb_test" />
 
         <CheckBox
@@ -78,6 +82,7 @@
             android:checked="false"
             android:enabled="false"
             android:text="主播B"
+            android:textSize="13sp"
             android:theme="@style/cb_test" />
 
         <CheckBox
@@ -88,6 +93,7 @@
             android:checked="false"
             android:enabled="false"
             android:text="主播C"
+            android:textSize="13sp"
             android:theme="@style/cb_test" />
     </LinearLayout>
 
