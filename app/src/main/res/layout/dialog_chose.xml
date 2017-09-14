@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="340dp"
-    android:layout_height="240dp"
+    android:layout_width="320dp"
+    android:layout_height="200dp"
     android:layout_gravity="center_horizontal"
     android:background="#FFFFFF"
     android:orientation="vertical">
@@ -18,12 +18,12 @@
             android:padding="8dp"
             android:text="请输入直播房间号"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/closeBtn_dialog"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
@@ -54,13 +54,13 @@
             android:inputType="numberSigned"
             android:padding="10dp"
             android:textColorHint="#aa111111"
-            android:textSize="20dp" />
+            android:textSize="14dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:orientation="horizontal">
 
         <CheckBox
@@ -70,7 +70,7 @@
             android:layout_weight="1"
             android:checked="true"
             android:text="主播A"
-            android:textSize="13sp"
+            android:textSize="18sp"
             android:theme="@style/cb_test" />
 
         <CheckBox
@@ -82,7 +82,7 @@
             android:checked="false"
             android:enabled="false"
             android:text="主播B"
-            android:textSize="13sp"
+            android:textSize="18sp"
             android:theme="@style/cb_test" />
 
         <CheckBox
@@ -93,23 +93,22 @@
             android:checked="false"
             android:enabled="false"
             android:text="主播C"
-            android:textSize="13sp"
+            android:textSize="18sp"
             android:theme="@style/cb_test" />
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="302dp"
         android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/intentBtn_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_margin="15dp"
             android:background="@drawable/btn"
-            android:text="确定"
+            android:text="确  定"
             android:textColor="#ffffff"
             android:textSize="15sp" />
     </RelativeLayout>

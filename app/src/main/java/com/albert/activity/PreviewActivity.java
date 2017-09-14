@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import com.albert.uitl.CameraHintView;
 import com.albert.uitl.VerticalSeekBar;
+import com.koushikdutta.async.http.AsyncHttpResponse;
 import com.ksyun.media.streamer.capture.CameraCapture;
 import com.ksyun.media.streamer.capture.camera.CameraTouchHelper;
 import com.ksyun.media.streamer.filter.imgtex.ImgBeautyProFilter;
@@ -48,7 +49,16 @@ import com.ksyun.media.streamer.filter.imgtex.ImgTexFilterMgt;
 import com.ksyun.media.streamer.framework.AVConst;
 import com.ksyun.media.streamer.kit.KSYStreamer;
 import com.ksyun.media.streamer.kit.StreamerConstants;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.apache.http.Header;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.util.ByteArrayBuffer;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -60,6 +70,7 @@ import static com.albert.activity.R.drawable.live;
 import static com.ksyun.media.streamer.kit.StreamerConstants.VIDEO_RESOLUTION_720P;
 
 public class PreviewActivity extends AppCompatActivity implements View.OnClickListener {
+    //    private WebSocketConnection mConnect = new WebSocketConnection();
     private static final String TAG = "MainActivity.............";
     private KSYStreamer mStreamer;
     private CameraHintView mCameraHintView;
@@ -100,12 +111,19 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     private String url;
 
     private Dialog myDialog;
+    private Dialog escDialog;
     private EditText editTextDialog;
     private Button startDialog;
     private ImageButton dissDialog;
     private CheckBox roomA;
     private CheckBox roomB;
     private CheckBox roomC;
+    private TextView gwcMoney;
+    private TextView peopleNum;
+
+    private ImageButton dissBtnEsc;
+    private Button psBtnEsc;
+    private Button ntBtnEsc;
 
 
 //    private MyDialog dialog;
@@ -155,9 +173,102 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        requestData();
+//        connect();
+
+    }
+
+    private void connect() {
+        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
+        String userId = sp.getString("userName", "");
+        final String wsurl = "ws://rms.weadd.cn:3000/" + id + "/" + userId;
+//       // url is the URL to download.
+//        AsyncHttpClient.getDefaultInstance().getJSONObject(url, new AsyncHttpClient.JSONObjectCallback() {
+//            // Callback is invoked with any exceptions/errors, and the result, if available.
+//            @Override
+//            public void onCompleted(Exception e, AsyncHttpResponse response, JSONObject result) {
+//                if (e != null) {
+//                    e.printStackTrace();
+//                    return;
+//                }
+//                System.out.println("I got a JSONObject: " + result);
+//            }
+//        });
+
+//        final String peopleUrl = "wss://rms.weadd.cn/" + id + "/" + wsurl;
+//        AsyncHttpClient client1 = new AsyncHttpClient();
+//        final JSONObject object = new JSONObject();
+//
+//        try {
+//            if (mStreamer.startStream()) {
+//                object.put("msgcontent", 1);
+//            } else if (mStreamer.stopStream()) {
+//                object.put("msgcontent", 0);
+//
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        ByteArrayEntity entity = null;
+//
+//        try {
+//            entity = new ByteArrayEntity(object.toString().getBytes("UTF-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        client1.post(this, peopleUrl, entity, "application/json", new TextHttpResponseHandler() {
+//            @Override
+//            public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(int i, Header[] headers, String s) {
+//                try {
+//                    String people = object.getString("currentUserNum");
+//                    peopleNum.setText(people);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
+
+
+    }
+
+    private void requestData() {
+
+        final String roomMoney = "https://fuwu.legouzb.weadd.cn/server/appsev.ashx?Command=getamount&fangjianhao=" + id;
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(roomMoney, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(int i, Header[] headers, String s) {
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    String money = obj.getString("amount");
+                    gwcMoney.setText(money);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
     }
 
     private void bindID() {
+
         mCameraHintView = (CameraHintView) findViewById(R.id.camera_hint);
         startLiveBtn = (ImageButton) findViewById(R.id.camera_start_pr_layout);
         peautyBtn = (ImageButton) findViewById(R.id.beauty_preview_layout);
@@ -183,6 +294,9 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         mPreviewView = findViewById(R.id.preview_btn);
         mLiveingView = findViewById(R.id.liveing_btn);
         mGwcView = findViewById(R.id.people_gwc_ifo);
+        gwcMoney = (TextView) findViewById(R.id.gwc_top_layout);
+        peopleNum = (TextView) findViewById(R.id.people_top_layout);
+
 
         peautyBtnL = (ImageButton) findViewById(R.id.beauty_live_layout);
         changedCaBtnL = (ImageButton) findViewById(R.id.changedCa_live_layout);
@@ -200,12 +314,22 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         roomA = (CheckBox) myDialog.findViewById(R.id.roomA_dialog);
         roomB = (CheckBox) myDialog.findViewById(R.id.roomB_dialog);
         roomC = (CheckBox) myDialog.findViewById(R.id.roomC_dialog);
+
+        escDialog = new Dialog(PreviewActivity.this, R.style.dialog);
+        escDialog.setContentView(R.layout.dialog_esc);
+        dissBtnEsc = (ImageButton) escDialog.findViewById(R.id.closeBtn_dialog_esc);
+        psBtnEsc = (Button) escDialog.findViewById(R.id.intentBtn_dialog_esc);
+        ntBtnEsc = (Button) escDialog.findViewById(R.id.nBtn_dialog_esc);
+
+        Window dialogWindow2 = escDialog.getWindow();
+        WindowManager.LayoutParams lp2 = dialogWindow2.getAttributes();
+        dialogWindow2.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        lp2.width = 950;
+
         Window dialogWindow = myDialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-
         dialogWindow.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-
-        lp.width = 1000;
+        lp.width = 950;
 
 
         startLiveBtn.setOnClickListener(this);
@@ -249,7 +373,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                     editor = getSharedPreferences("data", Context.MODE_PRIVATE).edit();
                     editor.putString("roomid", String.valueOf(editTextDialog.getText().toString()));
                     editor.apply();
-//                    parameterSettings();
                     initCamera();
 
 
@@ -288,6 +411,45 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    private void stopDialog() {
+        escDialog = new Dialog(PreviewActivity.this, R.style.dialog);
+        escDialog.setContentView(R.layout.dialog_esc);
+        dissBtnEsc = (ImageButton) escDialog.findViewById(R.id.closeBtn_dialog_esc);
+        psBtnEsc = (Button) escDialog.findViewById(R.id.intentBtn_dialog_esc);
+        ntBtnEsc = (Button) escDialog.findViewById(R.id.nBtn_dialog_esc);
+
+
+        dissBtnEsc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                escDialog.dismiss();
+            }
+        });
+        psBtnEsc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mStreamer.stopStream();
+                mLiveingView.setVisibility(View.INVISIBLE);
+                mPreviewView.setVisibility(View.VISIBLE);
+                mStreamer.hideWaterMarkTime();
+                state.setImageResource(R.drawable.ready);
+                escDialog.dismiss();
+
+
+            }
+        });
+        ntBtnEsc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                escDialog.dismiss();
+            }
+        });
+
+
+        escDialog.show();
+    }
+
+
     private void initCamera() {
 
         state.setImageResource(R.drawable.live);
@@ -298,8 +460,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         url = "rtmp://58.56.9.249:1935/live/" + id + "" + "A";
 
         Log.e("url=====", url);
-
-        mStreamer.setUrl(url);
 
 
         // 设置推流分辨率，可以不同于预览分辨率（不应大于预览分辨率，否则推流会有画质损失）
@@ -329,8 +489,11 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         mPreviewView.setVisibility(View.INVISIBLE);
         mLiveingView.setVisibility(View.VISIBLE);
         mGwcView.setVisibility(View.VISIBLE);
-        mStreamer.startStream();
         mStreamer.showWaterMarkTime(0.6f, 0.85f, 0.35f, Color.WHITE, 1.0f);
+
+        mStreamer.setUrl(url);
+
+        mStreamer.startStream();
         myDialog.dismiss();
 
         mStreamer.setOnErrorListener(mOnErrorListener);
@@ -406,33 +569,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
 
-    }
-
-    private void stopDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(PreviewActivity.this);
-        builder.setTitle("温馨提示:");
-        builder.setMessage("您确定要退出直播吗?");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mStreamer.stopStream();
-                mStreamer.hideWaterMarkTime();
-                mPreviewView.setVisibility(View.VISIBLE);
-                mLiveingView.setVisibility(View.INVISIBLE);
-                mGwcView.setVisibility(View.INVISIBLE);
-                editor.remove("roomid");
-                editor.apply();
-
-
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        builder.show();
     }
 
 
@@ -828,6 +964,13 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         mStreamer.setPreviewResolution(480, 0);
         // 设置预览帧率
         mStreamer.setPreviewFps(15);
+
+        /**
+         * 设置编码模式(软编、硬编)，请根据白名单和系统版本来设置软硬编模式，不要全部设成软编或者硬编,白名单可以联系金山云商务:
+         * StreamerConstants.ENCODE_METHOD_SOFTWARE
+         * StreamerConstants.ENCODE_METHOD_HARDWARE
+         */
+        mStreamer.setEncodeMethod(StreamerConstants.ENCODE_METHOD_SOFTWARE);
     }
 
     //start streaming
@@ -847,5 +990,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         stopLive.postInvalidate();
         mRecording = false;
     }
+
 
 }

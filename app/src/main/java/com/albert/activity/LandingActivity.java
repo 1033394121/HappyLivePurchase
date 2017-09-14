@@ -49,15 +49,15 @@ public class LandingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_landing);
         bindID();
 
-//        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-//        editor.putString("userName", String.valueOf(pheon.getText()));
+        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+        editor.putString("userName", String.valueOf(pheon.getText()));
 //        editor.putString("passwed", String.valueOf(password.getText()));
-//        editor.apply();
+        editor.apply();
 //
 //        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
 //        pheon.setText(sp.getString("userName", ""));
 //        password.setText(sp.getString("passwed", ""));
-//        showSoftInputFromWindow(this, pheon);
+        showSoftInputFromWindow(this, pheon);
 
     }
 

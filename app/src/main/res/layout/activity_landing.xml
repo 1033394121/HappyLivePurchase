@@ -10,9 +10,9 @@
         android:layout_height="50dp"
         android:background="#f8f8f8"
         android:gravity="center"
-        android:text="乐购直播"
+        android:text="主播登录"
         android:textColor="#000000"
-        android:textSize="18sp" />
+        android:textSize="22sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -32,12 +32,12 @@
             android:layout_height="wrap_content"
             android:text="手机:"
             android:textColor="#000000"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/phone_landing"
-            android:layout_width="230dp"
-            android:layout_height="35dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/edit"
             android:hint="请输入您的手机号码"
@@ -45,7 +45,9 @@
             android:maxLength="11"
             android:padding="5dp"
             android:text="15066657525"
-            android:textCursorDrawable="@drawable/edit_cursor_color" />
+            android:textCursorDrawable="@drawable/edit_cursor_color"
+
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,34 +62,40 @@
             android:layout_height="wrap_content"
             android:text="密码:"
             android:textColor="#000000"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/password_landing"
-            android:layout_width="230dp"
-            android:layout_height="35dp"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/edit"
             android:hint="请输入您的登录密码"
             android:inputType="number"
             android:padding="5dp"
             android:text="278945"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
 
-            android:textCursorDrawable="@drawable/edit_cursor_color" />
+            android:textSize="14sp" />
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/intentBt_landing"
-        android:layout_width="240dp"
+    <RelativeLayout
+        android:layout_width="308dp"
         android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/btn"
-        android:text="准备直播"
-        android:textColor="#ffffff"
-        android:textSize="15sp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
 
+        <Button
+            android:id="@+id/intentBt_landing"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:background="@drawable/btn"
+            android:text="登  录"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
 </LinearLayout>
 
