@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.albert.uitl.MixtureTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/msg_text_2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#ffffff"
+    android:layout_margin="2dp"
+    android:textSize="15sp">
+
+    <!--<com.albert.uitl.MixtureTextView-->
+    <!--android:id="@+id/msg_text_2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="15sp"-->
+    <!--&gt;-->
+
+
+    <!--<com.albert.uitl.CircleView-->
+        <!--android:id="@+id/user_tou"-->
+        <!--android:layout_width="17dp"-->
+        <!--android:layout_height="17dp"-->
+        <!--android:layout_marginTop="1dp"-->
+        <!--android:src="@mipmap/ic_launcher" />-->
+
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="17dp"
+        android:layout_height="16dp"
+        android:layout_toRightOf="@+id/user_tou"
+        android:textColor="#eab64b"
+        android:textSize="14sp" />
+
+
+    <!--</com.albert.uitl.MixtureTextView>-->
+    <ImageView
+        android:id="@+id/user_inf1_2"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_alignTop="@+id/user_name"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@+id/user_tou" />
+
+
+</com.albert.uitl.MixtureTextView>

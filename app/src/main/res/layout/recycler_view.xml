@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recycler_layout"
+    android:layout_width="match_parent"
+    android:layout_height="225dp">
+
+    <com.lqr.recyclerview.LQRRecyclerView
+        android:id="@+id/danmu_item_rcl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        app:rv_column="1"
+        app:rv_default_animator_open="true"
+        app:rv_divider_size="0dp"
+        app:rv_orientation="vertical"
+        app:rv_type="grid" />
+</RelativeLayout>

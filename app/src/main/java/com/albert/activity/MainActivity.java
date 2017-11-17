@@ -25,23 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
         setContentView(R.layout.activity_main);
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                super.run();
-//                try {
-//                    Thread.sleep(3000);
-//                    Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-//                    startActivity(intent);
-//                    finish();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.start();
+//        int num = Math.
+
+
 
         final Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override

@@ -9,8 +9,10 @@
     <color name="font_color_35">#ffffff</color>
     <color name="transparent1">#7fffffff</color><!--透明白色 -->
     <color name="check_box">#01ab00</color>
+    <color name="danmuText">#bd2832</color>
 
     <color name="dialogBac">#ffffff</color>
+    <color name="liaotian">#ff000000</color>
 
 
 </resources>
