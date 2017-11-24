@@ -52,7 +52,10 @@ import com.albert.uitl.InfoVO;
 import com.albert.uitl.MixtureTextView;
 import com.albert.uitl.RecyclerViewAdapter;
 import com.albert.uitl.VerticalSeekBar;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ksyun.media.streamer.capture.CameraCapture;
+import com.ksyun.media.streamer.capture.ViewCapture;
 import com.ksyun.media.streamer.capture.camera.CameraTouchHelper;
 import com.ksyun.media.streamer.filter.imgtex.ImgBeautyProFilter;
 import com.ksyun.media.streamer.filter.imgtex.ImgFilterBase;
@@ -86,6 +89,7 @@ import okhttp3.Response;
 import static android.Manifest.permission.CAMERA;
 import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 import static android.view.View.VISIBLE;
+import static com.ksyun.media.streamer.kit.StreamerConstants.VIDEO_RESOLUTION_1080P;
 import static com.ksyun.media.streamer.kit.StreamerConstants.VIDEO_RESOLUTION_720P;
 
 public class PreviewActivity extends AppCompatActivity implements View.OnClickListener {
@@ -93,6 +97,8 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG = "MainActivity.............";
     private KSYStreamer mStreamer;
     private CameraHintView mCameraHintView;
+    private ViewCapture mPaintViewCapture;
+
 
     private ImageButton peautyBtn;
     private ImageButton changedCaBtn;
@@ -190,7 +196,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     Bitmap tuijiantupian;
     private Message msg1;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;//权限请求码
-
+    private String mBgImagePath = "assets://taibiao.jpg";
 
     private Handler mMainHandler = new Handler();
     //
@@ -198,7 +204,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     private Handler mHandler1 = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            mPicView = findViewById(R.id.pic_view);
             recyclerView = (RecyclerView) findViewById(R.id.danmu_item_rcl);
             LinearLayoutManager layoutManager = new LinearLayoutManager(PreviewActivity.this,
                     LinearLayoutManager.VERTICAL, false);
@@ -230,11 +235,10 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                     recyclerView.setAdapter(adapter);
                     break;
                 case MSG_ID_4:
-                    mPicView.setVisibility(View.INVISIBLE);
+//
                     break;
                 case MSG_ID_5:
-                    mPicView.setVisibility(View.VISIBLE);
-                    tuijian.setImageBitmap(tuijiantupian);
+
                     break;
             }
 
@@ -249,6 +253,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     private WsManager wsManager;
     private Bitmap bm;
     private String imgUrl;
+    private URL url1;
 
 
     @Override
@@ -269,7 +274,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_preview);
 
         bindID();
-
         startCameraPreviewWithPermCheck();
 
         mStreamer.setOnInfoListener(mOnInfoListener);
@@ -300,6 +304,27 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    /**
+     * 把图片层和视频合流准备推送
+     *
+     * @author zhangchunzhao
+     * @date 2017/11/22 0022
+     */
+    private void heceng() {
+        // 创建ViewCapture
+
+        // 将创建好的ViewCapture输出连接到图像mixer上，此处使用空闲的7号SinkPin(0-2分别被camera和水印占据)
+        mPaintViewCapture.getSrcPin().connect(mStreamer.getImgTexMixer().getSinkPin(7));
+        // 设置PaintView在视频上的位置及大小，此处我们是全屏模式
+        mStreamer.getImgTexMixer().setRenderRect(7, 0, 0, 1, 1, 1);
+        // 设置从PaintView中取出的画面大小，一般不要超过视频大小，以节省资源
+        mPaintViewCapture.setTargetResolution(mStreamer.getTargetWidth(), mStreamer.getTargetHeight());
+        // 设置刷新频率，一般配置为推流的fps
+        mPaintViewCapture.setUpdateFps(15);
+//        开始叠加
+
+
+    }
 
     /**
      * 获取直播间交易金额
@@ -349,6 +374,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     private void bindID() {
 
         mCameraHintView = (CameraHintView) findViewById(R.id.camera_hint);
+
         startLiveBtn = (ImageButton) findViewById(R.id.camera_start_pr_layout);
         peautyBtn = (ImageButton) findViewById(R.id.beauty_preview_layout);
         changedCaBtn = (ImageButton) findViewById(R.id.changedCa_preview_layout);
@@ -375,6 +401,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         mPreviewView = findViewById(R.id.preview_btn);
         mLiveingView = findViewById(R.id.liveing_btn);
         mGwcView = findViewById(R.id.people_gwc_ifo);
+        mPicView = findViewById(R.id.pic_view);
         gwcMoney = (TextView) findViewById(R.id.gwc_top_layout);
         peopleNum = (TextView) findViewById(R.id.people_top_layout);
 
@@ -865,11 +892,13 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         mCameraPreview = (GLSurfaceView) findViewById(R.id.camera_preview);
         // 创建KSYStreamer实例
         mStreamer = new KSYStreamer(PreviewActivity.this);
+        mPaintViewCapture = new ViewCapture(mStreamer.getGLRender());
+
         // 设置预览View
         mStreamer.setDisplayPreview(mCameraPreview);
         mStreamer.setVideoCodecId(AVConst.CODEC_ID_AVC);
         // 设置预览分辨率, 当一边为0时，SDK会根据另一边及实际预览View的尺寸进行计算
-        mStreamer.setPreviewResolution(480, 0);
+        mStreamer.setPreviewResolution(VIDEO_RESOLUTION_1080P);
         // 设置预览帧率
         mStreamer.setPreviewFps(15);
         /**
@@ -938,7 +967,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 //                        new Thread(new Runnable() {
 //                            @Override
 //                            public void run() {
-                                JsonData(text);
+                        JsonData(text);
 
 //                            }
 //                        }).start();
@@ -1129,25 +1158,40 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                             infList.add(infoVO);
 //                            inputStream.close();
                         } else if (msType == 90) {
+
                             String tuijianURL = obj.getString("msgcontent");
-                            URL url = new URL("http://img1.weibiz.cn/" + tuijianURL);
-                            HttpURLConnection imageconn = (HttpURLConnection) url.openConnection();
-                            imageconn.setReadTimeout(50000);
-                            InputStream inputStream = imageconn.getInputStream();
-                            tuijiantupian = BitmapFactory.decodeStream(inputStream);
-                            inputStream.close();
-                            Message msg5 = mHandler1.obtainMessage();
-                            msg5.what = MSG_ID_5;
-                            msg5.obj = tuijiantupian;
-                            mHandler1.sendMessage(msg5);
+                            url1 = new URL("http://img1.weibiz.cn/" + tuijianURL);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mPaintViewCapture.stop();
+                                    heceng();
+                                    mPicView.setVisibility(View.VISIBLE);
+                                    // 参数为所需要叠加的View实例
+                                    mPaintViewCapture.start(mPicView);
+                                    Glide.with(PreviewActivity.this).load(url1).skipMemoryCache(true).fitCenter().into(tuijian);
+
+                                }
+                            });
+//                            Message msg5 = mHandler1.obtainMessage();
+//                            msg5.what = MSG_ID_5;
+//                            mHandler1.sendMessage(msg5);
                         } else if (msType == 80) {
-                            Message msg4 = mHandler1.obtainMessage();
-                            msg4.what = MSG_ID_4;
-                            msg4.arg1 = 10000;
-                            mHandler1.sendMessage(msg4);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mPaintViewCapture.stop();
+                                    mPicView.setVisibility(View.INVISIBLE);
+                                }
+                            });
+
+//                            Message msg4 = mHandler1.obtainMessage();
+//                            msg4.what = MSG_ID_4;
+//                            msg4.arg1 = 10000;
+//                            mHandler1.sendMessage(msg4);
 
                         } else if (msType == -1) {
-//                            Log.e("Web===", "我在呢-------------");
 //                            runOnUiThread(new Runnable() {
 //                                @Override
 //                                public void run() {
@@ -1164,7 +1208,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                msg1 = mHandler1.obtainMessage();
+                msg1 = new Message();
                 msg1.what = MSG_ID_1;
                 msg1.obj = infList;
                 mHandler1.sendMessage(msg1);
@@ -1178,6 +1222,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
             bm = null;
         }
     }
+
 
     /**
      * 断开重连机制
@@ -1314,6 +1359,23 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level == TRIM_MEMORY_UI_HIDDEN) {
+            Glide.get(this).clearMemory();
+        }
+        Glide.get(this).trimMemory(level);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(this).clearMemory();
+
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         // 一般可以在onResume中开启摄像头预览
@@ -1340,6 +1402,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     public void onDestroy() {
         super.onDestroy();
         // 清理相关资源
+        Glide.clear(tuijian);
         mStreamer.stopStream();
         mStreamer.release();
         thread.interrupt();
